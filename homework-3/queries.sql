@@ -30,3 +30,16 @@ where order_id IS NULL
 
 -- 4. уникальные названия продуктов, которых заказано ровно 10 единиц (количество заказанных единиц см в колонке quantity табл order_details)
 -- Этот запрос написать именно с использованием подзапроса.
+
+select DISTINCT Products.product_name
+from products
+where product_id in (
+	select product_id
+	from order_details
+	where Order_details.quantity = 10)
+
+-- 4. Вариант с использованием Join
+
+select DISTINCT Products.product_name, Order_details.quantity
+from products Join order_details USING (product_id)
+where Order_details.quantity = 10
